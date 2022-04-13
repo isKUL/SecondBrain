@@ -1,0 +1,32 @@
+version: "3.3"
+
+networks:
+  java_nat:
+    name: java_nat
+    driver: nat
+    ipam:
+      driver: default
+      config:
+        - subnet: 192.168.100.0/24
+          gateway: 192.168.100.1
+
+services:
+  p102:
+    labels:
+      com.example.description: "Description of instance"
+    container_name: p102
+    volumes:
+      - C:/proxy/p102:C:/proxy
+    networks:
+      java_nat:
+        ipv4_address: 192.168.100.102
+    ports:
+      - 10102:1509/tcp
+      - 10102:1509/udp
+    image: java-8-x64
+    command: cmd.exe "/C chcp 65001 && cd C:\proxy && java.exe -jar C:\proxy\myProxy.jar"
+    dns:
+      - 172.16.1.1
+    environment:
+      JAVA_TOOL_OPTIONS: "-Dfile.encoding=UTF8"
+    restart: unless-stoproxyed
