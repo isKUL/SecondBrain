@@ -1,7 +1,9 @@
 # Automatic creation of a NAT network and containers of Docker on Windows Server 2019
 ## Description of the problem
 Microsoft has made an interesting surprise for all users in the work of Docker on Windows Server
+
 > NAT networks created on Windows Server 2019 (or above) are no longer persisted after reboot.
+
 If your container needs to receive network traffic, process it and then send it to another source, then you will have big problems after restarting the Windows Server 2019 host with containers
 
 ## Solving the problem
@@ -10,8 +12,8 @@ If your container needs to receive network traffic, process it and then send it 
 3. We are writing a PowerShell script to run our docker-compose.yml file
 4. In the `Windows Task Scheduler`, we create a task to run a PowerShell script on behalf of the `system user` when `At startup`
 
-### Item 3. Example of a docker-compose.yml file
-[DockerCompose-Windows-NAT-Java](SecondBrain/blob/main/DockerCompose-Windows-NAT-Java/docker-compose.yml)
+### Item 2. Example of a docker-compose.yml file
+[DockerCompose-Windows-NAT-Java](/DockerCompose-Windows-NAT-Java/docker-compose.yml)
 
 ### Item 3. Example of a PowerShell script
 	$f = "C:\docker-compose.yml"
@@ -33,6 +35,7 @@ If your container needs to receive network traffic, process it and then send it 
 ### Disable default NAT
 Additionally, you can disable the default NAT network in Docker in Windows Server 2019
 Edit file `C:\ProgramData\docker\config` and add:
+
 	{ 
 		"bridge" : "none"
 	}
